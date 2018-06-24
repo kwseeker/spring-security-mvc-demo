@@ -5,6 +5,8 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import top.kwseeker.security.demo.dto.User;
 import top.kwseeker.security.demo.dto.UserQueryCondition;
@@ -73,6 +75,23 @@ public class UserController {
     public User getInfo(@PathVariable String id) {
         User user = new User();
         user.setUsername("Arvin");
+
+        return user;
+    }
+
+    //更新用户信息数据
+    @PutMapping("/{id:\\d+}")
+    public User updateInfo(@Valid @RequestBody User user, BindingResult errors) {   //BindingResult获取Validator错误消息
+        if(errors.hasErrors()) {
+            errors.getAllErrors().stream().forEach(error -> {
+                FieldError fieldError = (FieldError) error;
+                String message = fieldError.getField() + " " + fieldError.getDefaultMessage();
+                System.out.println(message);
+            });
+        }
+        System.out.println(ReflectionToStringBuilder.toString(user, ToStringStyle.MULTI_LINE_STYLE));
+        //更新用户数据的操作
+        //...
 
         return user;
     }
