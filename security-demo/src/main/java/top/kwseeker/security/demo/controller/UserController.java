@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController //如果方法返回是一个对象或对象的容器，会自动转换成JSON的格式
@@ -72,18 +73,21 @@ public class UserController {
 
     //获取指定用户的信息（通过用户id）
     @GetMapping(value = "/{id:\\d+}")   //正则表达式约束id值为多位整数
-    @JsonView(User.UserDetailView.class)
+//    @JsonView(User.UserDetailView.class)
+    @JsonView(User.UserSimpleView.class)
     public User getInfo(@PathVariable String id) {
 
-        if( true ) {     //TODO: 查数据库判断id是否存在
-            throw new UserNotExistException(id);
-        }
-        return null;
-//
-//        User user = new User();
-//        user.setUsername("Arvin");
-//
-//        return user;
+//        if( true ) {     //TODO: 查数据库判断id是否存在
+//            throw new UserNotExistException(id);
+//        }
+//        return null;
+
+        User user = new User();
+        user.setId("1");
+        user.setUsername("Arvin");
+        user.setPassword("123458");
+        user.setBirthday(new Date());
+        return user;
     }
 
     //更新用户信息数据

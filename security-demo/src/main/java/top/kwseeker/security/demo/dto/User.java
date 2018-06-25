@@ -12,7 +12,7 @@ public class User {
     public interface UserSimpleView {}
     public interface UserDetailView extends UserSimpleView {}   //展示UserDetailView会自动展示UserSimpleView
 
-    private int id;
+    private String id;
     @MyConstraint(message = "用户名不能超过16bytes")
     private String username;
     //For more Hibernate Validator to see: https://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/
@@ -28,11 +28,12 @@ public class User {
         this.password = password;
     }
 
-    public int getId() {
+    @JsonView(UserSimpleView.class)
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -54,6 +55,7 @@ public class User {
         this.password = password;
     }
 
+    @JsonView(UserSimpleView.class)
     public Date getBirthday() {
         return birthday;
     }
