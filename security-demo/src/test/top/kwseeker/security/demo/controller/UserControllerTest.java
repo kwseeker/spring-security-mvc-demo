@@ -20,6 +20,7 @@ import java.time.ZoneId;
 import java.util.Date;
 
 import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -104,4 +105,13 @@ public class UserControllerTest {
             .andExpect(jsonPath("$.id").value("1"))
             .andExpect(jsonPath("$.username").isString());
     }
+
+    @Test
+    public void whenDeleteSuccess() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+                .delete("/user/1")
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
+    }
+
 }

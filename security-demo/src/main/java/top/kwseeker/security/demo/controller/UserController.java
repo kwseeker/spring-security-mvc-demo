@@ -10,6 +10,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import top.kwseeker.security.demo.dto.User;
 import top.kwseeker.security.demo.dto.UserQueryCondition;
+import top.kwseeker.security.demo.exception.UserNotExistException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -73,10 +74,16 @@ public class UserController {
     @GetMapping(value = "/{id:\\d+}")   //正则表达式约束id值为多位整数
     @JsonView(User.UserDetailView.class)
     public User getInfo(@PathVariable String id) {
-        User user = new User();
-        user.setUsername("Arvin");
 
-        return user;
+        if( true ) {     //TODO: 查数据库判断id是否存在
+            throw new UserNotExistException(id);
+        }
+        return null;
+//
+//        User user = new User();
+//        user.setUsername("Arvin");
+//
+//        return user;
     }
 
     //更新用户信息数据
@@ -94,6 +101,14 @@ public class UserController {
         //...
 
         return user;
+    }
+
+    //删除用户
+    @DeleteMapping("/{id:\\d+}")
+    public void delete(@PathVariable String id) {
+        System.out.println("User id to delete: " + id);
+        //删除用户操作
+        //...
     }
 
 }
