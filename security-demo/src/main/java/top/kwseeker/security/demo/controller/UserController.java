@@ -1,6 +1,7 @@
 package top.kwseeker.security.demo.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +34,7 @@ public class UserController {
 
     //创建用户
     @PostMapping
+    @ApiOperation(value = "创建用户")   // 在文档中为create接口添加说明
     public User create(@Valid @RequestBody User user) {
         //TODO: Id号自增
         System.out.println(user.getId() + "\n"
@@ -47,7 +49,7 @@ public class UserController {
     //查询用户列表
     @GetMapping
     @JsonView(User.UserSimpleView.class)    //只显示UserSimpleView注释的接口获取的数据
-    //@ApiOperation(value="用户查询")
+    @ApiOperation(value = "用户查询")
     //public List<User> query(@RequestParam String username, @PageableDefault(page = 2, size = 5, sort = "username, desc") Pageable pageable) {
     //public List<User> query(@RequestParam(name = "username", required = false, defaultValue = "kwseeker") String un,
     //                        @PageableDefault(page = 2, size = 5, sort = "username, desc") Pageable pageable) {
